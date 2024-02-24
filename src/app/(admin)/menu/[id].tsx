@@ -1,11 +1,12 @@
 import products from "@/assets/data/products";
 import { defaultPizzaImage } from "@/src/components/ProductListItem";
 import Button from "@/src/components/Button";
-import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import {StyleSheet ,View, Text, Image, Pressable } from "react-native";
 import { useCart } from "@/src/Providers/CartProvider";
 import { PizzaSize } from "@/src/types";
+import { FontAwesome } from "@expo/vector-icons";
 const sizes: PizzaSize[] = ["S", "M", "L", "XL"]
 
  const ProductDetailsScreen = () => {
@@ -31,6 +32,27 @@ const  router = useRouter();
 
   return (
     <View style={styles.container} >
+       <Stack.Screen 
+                options=
+                  {{  title:"Menu",
+                      headerRight: () => (
+                        <Link href={`/(admin)/menu/create?id=${id}`} asChild>
+                          <Pressable>
+                            {({ pressed }) => (
+                              <FontAwesome
+                                name="pencil"
+                                size={25}
+                                color={"white"}
+                                style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                              />
+                            )}
+                          </Pressable>
+                        </Link>
+                    )
+                }}
+            />
+
+
       <Stack.Screen options={{title:chosenProduct?.name}}/>
       <Image source={{uri:chosenProduct.image || defaultPizzaImage }} style={styles.image} resizeMode="contain" />
       

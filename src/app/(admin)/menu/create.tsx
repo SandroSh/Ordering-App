@@ -1,10 +1,10 @@
-import {StyleSheet , View, Text, TextInput, Image } from 'react-native'
+import {StyleSheet , View, Text, TextInput, Image, Alert} from 'react-native'
 import React, { useState } from 'react'
 import Colors from '@/src/constants/Colors';
 import Button from '@/src/components/Button';
 import { defaultPizzaImage } from '@/src/components/ProductListItem';
 import * as ImagePicker from 'expo-image-picker';
-import { Stack } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
 import { AntDesign} from '@expo/vector-icons';
 
 
@@ -14,8 +14,8 @@ const CreateProductScreen = () => {
   const [price, setPrice] = useState("");
   const [error, setError] = useState("");
   const [image, setImage] = useState<string | null>(null);
-
-
+  const {id} = useLocalSearchParams();
+  const isUpdating = !!id;
 
   const resetFields = () => {
     setName("");
@@ -46,6 +46,22 @@ const CreateProductScreen = () => {
 
     resetFields();
   }
+  const onUpdateCreate = () => {
+    if(!validateInputs()){
+      return;
+    }
+    console.warn("Updating",name, price)
+    validateInputs();
+
+    resetFields();
+  }
+   const onSubmit = () => {
+      if(isUpdating){
+        onUpdateCreate();
+      }else{
+        onCreate();
+      }
+   }
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -63,9 +79,26 @@ const CreateProductScreen = () => {
     }
   };
 
+  const onDelete = () =>{
+    console.warn("DELETE!!!")
+  }
+
+  const confirmDelete = () =>{
+    Alert.alert("Confirm", "Are you sure you want to delete this product?", [
+      {
+        text:'Cancel'
+      },
+      {
+        text:"Delete",
+        style:'destructive',
+        onPress:onDelete,
+      }
+    ])
+  }
+
   return (
     <View style={styles.mainContainer} >
-      <Stack.Screen options={{title: "Create Product"}} />
+      <Stack.Screen options={{title: isUpdating ? "Update Product" : "Create Product"}} />
       <Image source={{uri: image || defaultPizzaImage}} style={styles.image} />
 
       <View style={styles.imageContainer}>
@@ -85,7 +118,8 @@ const CreateProductScreen = () => {
       <TextInput placeholder='$17.9' style={styles.input} keyboardType='numeric' value={price} onChangeText={setPrice}/>
       
       <Text style={{color:"red"}}>{error}</Text>
-      <Button text={'Create'} onPress={onCreate} />
+      <Button text={ isUpdating? "Update" : 'Create'} onPress={onSubmit} />
+      {isUpdating && <Text  onPress={confirmDelete} style={styles.deleteText} >Delete</Text>}
     </View>
   )
 }
@@ -106,7 +140,7 @@ const styles = StyleSheet.create({
       justifyContent:'center'
     },
     image:{
-      width:'90%',
+      width:'70%',
       aspectRatio:1,
       alignSelf:'center'
     },
@@ -129,6 +163,15 @@ const styles = StyleSheet.create({
       fontWeight:'bold',
       fontSize:20,
       fontFamily:"monospace"
+    },
+    deleteText:{
+      color:'red',
+      textAlign:'center',
+      fontWeight:'bold',
+      fontSize:20,
+      fontFamily:"monospace",
+      
+      
     }
     
 });

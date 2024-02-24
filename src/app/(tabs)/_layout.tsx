@@ -36,6 +36,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="cutlery" color={color} />,
         }}
       />
+       
       <Tabs.Screen
         name="two"
         options={{
