@@ -18,16 +18,18 @@ const Button = forwardRef<View | null, ButtonProps>(
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.light.tint,
+    backgroundColor: "#a7a7a7",
     padding: 15,
     alignItems: 'center',
     borderRadius: 100,
     marginVertical: 10,
+    flex:2
   },
   text: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: 'bold',
     color: 'white',
+    fontFamily:'monospace'
   },
 });
 

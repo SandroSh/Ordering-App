@@ -15,8 +15,11 @@ const CartScreen = () => {
           renderItem={({item}) => <CartListItem cartItem={item}/>}
           numColumns={1}
         />
-        <Text style={styles.totalPriceText}>Total: ${totalPrice.toFixed(2)}</Text>
-        <Button text={"Checkout"}/>
+        <View style={styles.checkoutContainer}>
+          <Button text={"Checkout"}/>
+          <Text style={styles.totalPriceText}>${totalPrice.toFixed(2)}</Text>
+        </View>
+        
 
         <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
@@ -32,10 +35,15 @@ const styles = StyleSheet.create({
     backgroundColor:'#efefed',
     padding:10
   },
+  checkoutContainer:{
+    flexDirection:'row',
+    alignItems:'center'
+  },
   totalPriceText:{
     fontSize:20,
     fontWeight:'bold',
-    fontFamily:'monospace'
+    fontFamily:'monospace',
+    marginHorizontal:20
   }
   
 
