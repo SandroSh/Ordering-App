@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 100,
     marginVertical: 10,
-    flex:2
+    
   },
   text: {
     fontSize: 18,
