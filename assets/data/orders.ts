@@ -27,7 +27,22 @@ const orders: Order[] = [
         quantity: 1,
         product_id: products[1].id,
         products: products[1],
+      }, {
+        id: 3,
+        order_id: 23123,
+        size: 'L',
+        quantity: 1,
+        product_id: products[1].id,
+        products: products[1],
+      }, {
+        id: 4,
+        order_id: 23123,
+        size: 'L',
+        quantity: 1,
+        product_id: products[1].id,
+        products: products[1],
       },
+      
     ],
   },
   {
